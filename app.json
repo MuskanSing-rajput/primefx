@@ -21,10 +21,6 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.primefx1.primeApp"
     },
-    "androidNavigationBar": {
-      "backgroundColor": "#050506",
-      "barStyle": "light-content"
-    },
     "web": {
       "output": "static",
       "favicon": "./assets/images/favicon.png"
@@ -43,7 +39,8 @@
             "imageWidth": 160
           }
         }
-      ]
+      ],
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,
