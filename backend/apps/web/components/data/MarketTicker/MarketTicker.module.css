@@ -1,0 +1,126 @@
+.tickerContainer {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-3);
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tickerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.tickerTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.tickerTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tickerTable th {
+  padding: var(--space-2) var(--space-3);
+  font-size: 10px;
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: right;
+  background: var(--table-header-bg);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.tickerTable th:first-child {
+  text-align: left;
+}
+
+.tickerTable td {
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 300ms ease;
+  white-space: nowrap;
+}
+
+.tickerTable td:first-child {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+
+.tickerTable tr:last-child td {
+  border-bottom: none;
+}
+
+.tickerTable tr:hover td {
+  background: var(--table-row-hover);
+}
+
+/* ─── Price Flash ───────────────────────────────────────────── */
+.priceUp {
+  color: var(--text-success);
+  animation: flashGreen 600ms ease-out;
+}
+
+.priceDown {
+  color: var(--text-danger);
+  animation: flashRed 600ms ease-out;
+}
+
+.priceNeutral {
+  color: var(--text-secondary);
+}
+
+/* ─── Spread Column ─────────────────────────────────────────── */
+.spread {
+  color: var(--text-tertiary);
+  font-size: var(--text-xs);
+}
+
+.spreadLow {
+  color: var(--text-success);
+}
+
+/* ─── Category Badge ────────────────────────────────────────── */
+.categoryBadge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: var(--font-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-1);
+  background: var(--badge-neutral-bg);
+  color: var(--badge-neutral-text);
+  margin-left: var(--space-2);
+  vertical-align: middle;
+}
+
+.categoryForex  { background: var(--badge-accent-bg);  color: var(--badge-accent-text); }
+.categoryCfd    { background: var(--color-purple-muted); color: #a78bfa; }
+.categoryCrypto { background: var(--color-orange-muted); color: #fb923c; }
+
+/* ─── Skeleton ──────────────────────────────────────────────── */
+.skeletonRow td {
+  padding: var(--space-3) var(--space-3);
+}
+.skeletonCell {
+  height: 14px;
+  width: 70px;
+  border-radius: var(--radius-1);
+}

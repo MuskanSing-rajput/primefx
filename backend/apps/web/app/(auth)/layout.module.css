@@ -1,0 +1,102 @@
+/* Theme-aware auth layout */
+.layout {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-canvas, #08090c);
+  color: var(--text-primary, #f1f5f9);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow-y: auto;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* Radial glow blobs in background */
+.layout::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 65%);
+  z-index: 0;
+}
+
+.bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+:global([data-theme="light"]) .bgVideo {
+  opacity: 0.35;
+}
+
+.videoOverlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(16, 28, 54, 0.45) 0%, rgba(6, 12, 26, 0.8) 100%);
+  z-index: 2;
+  pointer-events: none;
+  transition: background 300ms ease;
+}
+
+:global([data-theme="light"]) .videoOverlay {
+  background: radial-gradient(circle at center, rgba(240, 244, 250, 0.35) 0%, rgba(220, 230, 242, 0.6) 100%);
+}
+
+.authHeader {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+}
+
+.themeToggleBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.15));
+  color: var(--text-primary, #ffffff);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.1));
+  transition: all 200ms ease;
+}
+
+.themeToggleBtn:hover {
+  background: var(--card-bg-hover, rgba(255, 255, 255, 0.2));
+  border-color: var(--border-accent, #3b82f6);
+  transform: translateY(-1px);
+}
+
+.main {
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px 40px;
+  position: relative;
+  z-index: 10;
+}

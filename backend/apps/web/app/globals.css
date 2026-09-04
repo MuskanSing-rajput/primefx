@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* ── Cyberpunk broker theme tokens ── */
+  --cp-bg:       #060810;
+  --cp-s1:       #0b0e1a;
+  --cp-s2:       #111426;
+  --cp-s3:       #181d30;
+  --cp-border:   rgba(255,255,255,0.06);
+  --cp-border2:  rgba(255,255,255,0.10);
+  --cp-teal:     #2dd4bf;
+  --cp-teal-dim: rgba(45,212,191,0.15);
+  --cp-teal-glo: rgba(45,212,191,0.25);
+  --cp-mag:      #e879f9;
+  --cp-mag-dim:  rgba(232,121,249,0.12);
+  --cp-text:     #f1f5f9;
+  --cp-muted:    #94a3b8;
+  --cp-dim:      #64748b;
+  --cp-dimmer:   #334155;
+  --cp-green:    #22c55e;
+  --cp-red:      #f87171;
+  --cp-amber:    #fbbf24;
+  --cp-mono:     'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --cp-nav-bg:   rgba(6, 8, 16, 0.92);
+  --cp-nav-shadow: 0 1px 0 rgba(45,212,191,0.12), 0 4px 20px rgba(0,0,0,0.5);
+}
+
+html[data-theme="light"] {
+  --cp-bg:       #f4f6fa;
+  --cp-s1:       #ffffff;
+  --cp-s2:       #e2e8f0;
+  --cp-s3:       #cbd5e1;
+  --cp-border:   rgba(0,0,0,0.06);
+  --cp-border2:  rgba(0,0,0,0.12);
+  --cp-teal:     #0d9488;
+  --cp-teal-dim: rgba(13,148,136,0.08);
+  --cp-teal-glo: rgba(13,148,136,0.15);
+  --cp-mag:      #d946ef;
+  --cp-mag-dim:  rgba(217,70,239,0.08);
+  --cp-text:     #0f172a;
+  --cp-muted:    #334155;
+  --cp-dim:      #475569;
+  --cp-dimmer:   #94a3b8;
+  --cp-green:    #16a34a;
+  --cp-red:      #dc2626;
+  --cp-amber:    #d97706;
+  --cp-nav-bg:   rgba(255, 255, 255, 0.92);
+  --cp-nav-shadow: 0 1px 0 rgba(13,148,136,0.08), 0 4px 12px rgba(0,0,0,0.03);
+}
+
+
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html {
+  height: 100%;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure Next.js root wrapper fills full height */
+body > div:first-child,
+body > div#__next,
+#__next {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

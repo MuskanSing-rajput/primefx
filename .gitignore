@@ -31,7 +31,26 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.env
+.env.*
+!.env.example
+*.py
+check_*.js
+find_*.js
+fix_*.js
+fix_*.py
+patch_*.py
+patch_*.js
+reapply_*.py
+revert_*.py
+rewrite_*.py
+run_render*.js
+undo_*.js
+update_*.py
+update_*.patch
+settings_jsx.txt
+restore_more.js
+remove_logout_menu.py
 
 # typescript
 *.tsbuildinfo

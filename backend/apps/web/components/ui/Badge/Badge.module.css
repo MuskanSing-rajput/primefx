@@ -1,0 +1,62 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: var(--font-bold);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* ─── Variants ───────────────────────────────────────────────── */
+.active, .success, .approved {
+  background:    var(--badge-active-bg);
+  color:         var(--badge-active-text);
+  border-color:  var(--badge-active-border);
+}
+
+.pending {
+  background:    var(--badge-pending-bg);
+  color:         var(--badge-pending-text);
+  border-color:  var(--badge-pending-border);
+}
+
+.suspended, .warning {
+  background:    var(--badge-pending-bg);
+  color:         var(--badge-pending-text);
+  border-color:  var(--badge-pending-border);
+}
+
+.rejected, .danger {
+  background:    var(--badge-danger-bg);
+  color:         var(--badge-danger-text);
+  border-color:  var(--badge-danger-border);
+}
+
+.neutral {
+  background:    var(--badge-neutral-bg);
+  color:         var(--badge-neutral-text);
+  border-color:  var(--badge-neutral-border);
+}
+
+.accent, .info {
+  background:    var(--badge-accent-bg);
+  color:         var(--badge-accent-text);
+  border-color:  var(--badge-accent-border);
+}

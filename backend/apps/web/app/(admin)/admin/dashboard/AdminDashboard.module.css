@@ -1,0 +1,192 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1400px;
+  animation: fadeIn 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Breadcrumb ─────────────────────────────────────────────── */
+@keyframes breadcrumbSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  animation: breadcrumbSlideIn 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.breadcrumbItem {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.breadcrumbItemActive {
+  color: var(--text-accent);
+  font-weight: 700;
+}
+
+.breadcrumbSep {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  font-size: 10px;
+}
+
+/* ─── Page Header ────────────────────────────────────────────── */
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: 8px;
+}
+
+.pageTitle {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.pageSubtitle {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  margin-top: 3px;
+}
+
+.headerMeta { flex-shrink: 0; }
+
+.timestamp {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  background: var(--badge-neutral-bg);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 8px;
+  border-radius: var(--radius-2);
+}
+
+/* ─── KPI Grid ───────────────────────────────────────────────── */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ─── Content Grid ───────────────────────────────────────────── */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-5);
+}
+
+@media (max-width: 1024px) {
+  .contentGrid { grid-template-columns: 1fr; }
+}
+
+/* ─── Section ────────────────────────────────────────────────── */
+.tableSection, .feedSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.viewAll {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-accent);
+  text-decoration: none;
+  transition: color 150ms ease, transform 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.viewAll:hover {
+  color: var(--color-accent-hover);
+  transform: translateX(2px);
+}
+
+/* ─── Table Card ─────────────────────────────────────────────── */
+.tableCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-3);
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.companyName {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+/* ─── Feed Card ──────────────────────────────────────────────── */
+.feedCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-3);
+  overflow: hidden;
+  flex: 1;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.feedItemSkeleton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.feedDotSkeleton {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.feedTextSkeleton { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.feedLine1 { height: 12px; width: 70%; border-radius: var(--radius-1); }
+.feedLine2 { height: 10px; width: 40%; border-radius: var(--radius-1); }
+
+.emptyFeed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  font-style: italic;
+}

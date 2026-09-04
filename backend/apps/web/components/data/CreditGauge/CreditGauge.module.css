@@ -1,0 +1,114 @@
+.gaugeContainer {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-3);
+  padding: var(--space-5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.gaugeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gaugeTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.gaugePercent {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.gaugePercentLow    { color: var(--text-success); }
+.gaugePercentMid    { color: var(--text-warning); }
+.gaugePercentHigh   { color: var(--text-danger); }
+
+/* ─── Progress Bar ──────────────────────────────────────────── */
+.gaugeTrack {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.gaugeFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1), background 300ms ease;
+  animation: gaugeFill 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+}
+
+.gaugeFill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-full);
+}
+
+.gaugeFillLow  { background: linear-gradient(90deg, #10b981, #34d399); }
+.gaugeFillMid  { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.gaugeFillHigh { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+/* ─── Legend ────────────────────────────────────────────────── */
+.gaugeLegend {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.legendItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.legendLabel {
+  font-size: 10px;
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.legendValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Warning Threshold ─────────────────────────────────────── */
+.warningText {
+  font-size: var(--text-xs);
+  color: var(--text-warning);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dangerText {
+  font-size: var(--text-xs);
+  color: var(--text-danger);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

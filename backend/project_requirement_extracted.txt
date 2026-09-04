@@ -1,0 +1,239 @@
+=== PAGE 1 ===
+Business Requirements & Functional Overview
+Version: 1.0
+1. Project Overview
+The objective of this project is to build an independent Liquidity Provider (LP) platform that enables 
+Forex/CFD brokers to integrate with a single liquidity infrastructure without managing their own 
+execution backend.
+The platform acts as the central liquidity gateway between brokers and the execution infrastructure.
+Brokers will integrate only with our LP platform through APIs. The underlying execution infrastructure 
+remains completely hidden from brokers.
+This platform is designed exclusively for B2B clients (Forex/CFD Brokers) and is not intended for retail 
+traders.
+2. Business Model
+The platform operates as a B2B Liquidity Provider.
+Business Flow:
+Retail Trader
+↓
+Broker Platform
+↓
+Independent LP Platform
+↓
+Execution Infrastructure
+↓
+Liquidity Source
+Retail traders never interact directly with the LP platform.
+
+
+=== PAGE 2 ===
+The broker remains the only entity responsible for client onboarding, client management, and client-
+facing trading services.
+The LP platform only provides liquidity, execution, reporting, and risk services to brokers.
+3. Broker Registration & Onboarding
+Any broker should be able to register through the platform.
+Registration includes:
+Company Information
+Business Contact Details
+KYC Documentation
+Business Verification
+Agreement Acceptance
+After successful verification, the Super Admin approves the broker account.
+Once approved, the broker receives:
+API Access
+API Credentials
+WebSocket Access
+API Documentation
+Wallet
+Trading Credit
+Broker Dashboard Access
+4. Wallet & Credit System
+Every broker has an individual wallet.
+Supported deposit methods include:
+USDT
+BTC
+ETH
+USDC
+Deposits are converted into available trading credit.
+The platform continuously maintains:
+Wallet Balance
+
+
+=== PAGE 3 ===
+Credit Limit
+Used Credit
+Available Credit
+Margin Usage
+Trading Exposure
+Trading availability depends on the broker’s available credit.
+5. Broker Integration
+The broker integrates its own CRM, trading platform, or back-office system with the LP platform using 
+REST APIs and WebSocket APIs.
+All client orders are submitted to the LP platform.
+The broker never communicates directly with the execution infrastructure.
+The LP platform acts as the broker’s only trading gateway.
+6. Market Data
+The LP platform continuously streams real-time market prices.
+Brokers may display these prices to their clients.
+Brokers are not permitted to publish their own market data into the LP platform.
+However, during order placement, if enabled by the Super Admin, the broker may submit an execution 
+price together with the order request.
+This execution price is used only for order validation and execution purposes.
+It is not treated as a market data feed.
+7. Execution Price Validation
+Execution Price Validation is an optional feature controlled by the Super Admin.
+When enabled, the broker may include an execution price with the order.
+Before execution, the LP platform validates:
+Symbol
+Execution Price
+
+
+=== PAGE 4 ===
+Price Freshness
+Allowed Price Deviation
+Order Volume
+Trading Session
+If validation succeeds:
+The submitted execution price is accepted.
+If validation fails:
+The platform follows the configured execution policy, which may include:
+Rejecting the order
+Executing using the LP market price
+This prevents stale, manipulated, or invalid pricing.
+8. Order Execution
+Each broker is assigned one dedicated execution account.
+This assignment is performed manually by the Super Admin.
+Every order submitted by the broker is always executed through the broker’s assigned execution 
+account.
+The broker has no visibility into:
+Execution Account
+Execution Infrastructure
+Liquidity Connections
+Internal Trading Systems
+The broker only receives the final execution result.
+9. Pricing Model
+The platform follows a Cost + Markup business model.
+LP Platform provides:
+Raw Spread
+Raw Commission
+Raw Swap
+
+
+=== PAGE 5 ===
+Broker configures:
+Spread Markup
+Client Commission
+Pricing Profiles
+The final trading conditions presented to the broker’s clients are generated from these configurations.
+10. Revenue Model
+Platform revenue is generated from the pricing difference between LP costs and broker pricing.
+Example:
+LP Raw Commission
+↓
+Broker Commission
+↓
+Broker Profit
+Similarly:
+LP Raw Spread
+↓
+Broker Spread Markup
+↓
+Final Client Spread
+↓
+Broker Revenue
+The platform does not pay rebates to brokers under this business model.
+Each broker is responsible for determining its own client pricing strategy within platform-defined limits.
+11. Client Data Management
+The LP platform stores individual client trading information internally.
+
+
+=== PAGE 6 ===
+This enables:
+Accurate Position Tracking
+Floating PnL Calculation
+Closed PnL Calculation
+Exposure Monitoring
+Trade History
+Reporting
+Risk Analysis
+Every client belongs exclusively to one broker.
+Data isolation is mandatory.
+Broker A cannot access Broker B’s clients under any circumstances.
+The Super Admin has complete visibility across all brokers.
+12. Broker Dashboard
+The Broker Dashboard provides business-related information only.
+Available features include:
+Wallet
+Credit Usage
+Client Accounts
+Client Positions
+Floating PnL
+Closed PnL
+Open Orders
+Trade History
+Reports
+API Credentials
+API Documentation
+Pricing Settings
+Deposit History
+Withdrawal Requests
+Notifications
+The Broker Dashboard must never expose internal infrastructure.
+The following information remains hidden:
+Execution Accounts
+Internal Trading Systems
+Liquidity Providers
+
+
+=== PAGE 7 ===
+Internal Order Mapping
+Internal Execution Details
+13. Super Admin Dashboard
+The Super Admin controls the entire platform.
+Responsibilities include:
+Broker Approval
+Broker Suspension
+Wallet Management
+Credit Allocation
+Deposit Approval
+Withdrawal Approval
+Execution Account Assignment
+Market Configuration
+Symbol Management
+Pricing Management
+Platform Monitoring
+Risk Monitoring
+Client Monitoring
+Reporting
+Audit Review
+Only the Super Admin has access to execution infrastructure details.
+14. Pricing Control
+Pricing responsibilities are divided between the LP Platform and Brokers.
+Super Admin controls:
+Raw Spread
+Raw Commission
+Raw Swap
+Trading Symbols
+Trading Rules
+Maximum Pricing Limits
+Broker controls:
+Spread Markup
+Client Commission
+
+
+=== PAGE 8 ===
+Client Pricing Profiles
+The broker cannot modify any LP base pricing.
+15. Core Business Rules
+The following business rules govern the platform:
+Every broker operates independently.
+Every broker has an individual wallet.
+Every broker has an individual trading credit.
+Every broker is assigned one dedicated execution account.
+Brokers cannot view or access execution infrastructure.
+Brokers cannot access other brokers’ data.
+Client information is isolated per broker.
+Super Admin controls all base pricing.
+Brokers may only configure markup and commission within permitted limits.
+Every trade must be recorded for reporting and auditing purposes.
+All balances, positions, and PnL values are updated in real time.
+

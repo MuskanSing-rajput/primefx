@@ -1,0 +1,201 @@
+/* ============================================================
+   Animations & Keyframes
+   LP Platform — "Precision" Design Language
+   ============================================================ */
+
+/* ─── Fade ───────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ─── Slide Panel (right side) ──────────────────────────────── */
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); opacity: 0.6; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes slideOutToRight {
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
+}
+
+/* ─── Slide Drawer (bottom) ─────────────────────────────────── */
+@keyframes slideInFromBottom {
+  from { transform: translateY(100%); opacity: 0.6; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes slideOutToBottom {
+  from { transform: translateY(0);    opacity: 1; }
+  to   { transform: translateY(100%); opacity: 0; }
+}
+
+/* ─── Scale Up (dropdown, tooltip) ─────────────────────────── */
+@keyframes scaleUp {
+  from { transform: scale(0.96) translateY(-4px); opacity: 0; }
+  to   { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+@keyframes scaleDown {
+  from { transform: scale(1)    translateY(0);    opacity: 1; }
+  to   { transform: scale(0.96) translateY(-4px); opacity: 0; }
+}
+
+/* ─── Skeleton Pulse ────────────────────────────────────────── */
+@keyframes skeletonPulse {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base)      25%,
+    var(--skeleton-highlight) 50%,
+    var(--skeleton-base)      75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.8s ease-in-out infinite;
+  border-radius: var(--radius-1);
+}
+
+/* ─── Spinner ───────────────────────────────────────────────── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Toast slide (bottom right) ────────────────────────────── */
+@keyframes toastIn {
+  from { transform: translateX(110%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(110%); opacity: 0; }
+}
+
+/* ─── Toast Progress ────────────────────────────────────────── */
+@keyframes toastProgress {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+/* ─── Number Ticker ─────────────────────────────────────────── */
+@keyframes tickerUp {
+  0%   { transform: translateY(0);     opacity: 1; }
+  50%  { transform: translateY(-40%);  opacity: 0; }
+  51%  { transform: translateY(40%);   opacity: 0; }
+  100% { transform: translateY(0);     opacity: 1; }
+}
+
+@keyframes tickerDown {
+  0%   { transform: translateY(0);    opacity: 1; }
+  50%  { transform: translateY(40%);  opacity: 0; }
+  51%  { transform: translateY(-40%); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* ─── Price Flash ───────────────────────────────────────────── */
+@keyframes flashGreen {
+  0%   { background-color: transparent; }
+  30%  { background-color: rgba(16, 185, 129, 0.18); }
+  100% { background-color: transparent; }
+}
+
+@keyframes flashRed {
+  0%   { background-color: transparent; }
+  30%  { background-color: rgba(239, 68, 68, 0.18); }
+  100% { background-color: transparent; }
+}
+
+.price-flash-up   { animation: flashGreen 800ms ease-out; }
+.price-flash-down { animation: flashRed   800ms ease-out; }
+
+/* ─── PnL Value Change ──────────────────────────────────────── */
+@keyframes pnlPulseUp {
+  0%   { color: var(--text-success); }
+  50%  { color: #6EE7B7; }
+  100% { color: var(--text-success); }
+}
+
+@keyframes pnlPulseDown {
+  0%   { color: var(--text-danger); }
+  50%  { color: #FCA5A5; }
+  100% { color: var(--text-danger); }
+}
+
+/* ─── Connection Status Pulse ───────────────────────────────── */
+@keyframes statusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70%  { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* ─── Stagger Fade Up (card entrance) ───────────────────────── */
+@keyframes staggerFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Shimmer (live data indicator) ─────────────────────────── */
+@keyframes shimmer {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* ─── Pulse Glow (connection status) ────────────────────────── */
+@keyframes pulseGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50%  { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* ─── Slide In Up (table rows) ──────────────────────────────── */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Gauge Fill ────────────────────────────────────────────── */
+@keyframes gaugeFill {
+  from { width: 0%; }
+}
+
+/* ─── Subtle Float (decorative) ─────────────────────────────── */
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────── */
+.animate-fade-in      { animation: fadeIn var(--transition-base) ease forwards; }
+.animate-scale-up     { animation: scaleUp 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-spin         { animation: spin 700ms linear infinite; }
+.animate-status-pulse { animation: statusPulse 2s ease-in-out infinite; }
+.animate-stagger      { animation: staggerFadeUp 400ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-shimmer      { animation: shimmer 2s ease-in-out infinite; }
+.animate-pulse-glow   { animation: pulseGlow 2s ease-in-out infinite; }
+.animate-slide-up     { animation: slideInUp 300ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-gauge-fill   { animation: gaugeFill 800ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-float        { animation: subtleFloat 3s ease-in-out infinite; }

@@ -1,0 +1,167 @@
+/* ============================================================
+   Light Theme — "Precision Light Glassmorphism"
+   Applied when: [data-theme="light"] on <html>
+   ============================================================ */
+
+[data-theme="light"] {
+
+  /* ─── Backgrounds ─────────────────────────────────────────── */
+  --bg-canvas:      #f4f6fa;
+  --bg-surface:     rgba(255, 255, 255, 0.65);
+  --bg-card:        rgba(255, 255, 255, 0.55);
+  --bg-input:       rgba(255, 255, 255, 0.45);
+  --bg-primary:     rgba(255, 255, 255, 0.45);
+  --bg-secondary:   rgba(255, 255, 255, 0.3);
+  --bg-tertiary:    rgba(240, 244, 248, 0.5);
+  --bg-quaternary:  rgba(226, 232, 240, 0.6);
+  --bg-inverse:     #090a0f;
+
+  /* ─── Glassmorphism Layout Variables (Light) ─── */
+  --shell-bg: radial-gradient(circle at 18% 18%, #f3f7fa 0%, #dee5ed 100%);
+  --nav-bg: rgba(255, 255, 255, 0.45);
+  --nav-border: rgba(255, 255, 255, 0.6);
+  --sidebar-bg: rgba(255, 255, 255, 0.55);
+  --sidebar-border: rgba(255, 255, 255, 0.65);
+  --glow-patch: radial-gradient(circle at 25% 20%, rgba(59, 130, 246, 0.28) 0%, rgba(99, 102, 241, 0.1) 40%, rgba(255, 255, 255, 0) 70%);
+  --glow-color1: rgba(59, 130, 246, 0.2);
+  --glow-color2: rgba(251, 207, 232, 0.15);
+  
+  /* Card Styling (Premium Translucent Light Glass) */
+  --card-bg: rgba(255, 255, 255, 0.38);
+  --dropdown-bg: #ffffff;
+  --card-bg-hover: rgba(255, 255, 255, 0.52);
+  --card-border: rgba(255, 255, 255, 0.65);
+  --card-border-hover: rgba(59, 130, 246, 0.45);
+  --card-shadow: 0 10px 30px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --card-hover-shadow: 0 20px 40px rgba(59, 130, 246, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  
+  --item-hover: rgba(15, 23, 42, 0.035);
+  --line-color: rgba(15, 23, 42, 0.05);
+  --btn-active-bg: #0f172a;
+  --btn-active-color: #ffffff;
+  
+  /* Statuses */
+  --status-pill-bg: rgba(16, 185, 129, 0.08);
+  --status-pill-color: #10b981;
+  --status-pill-border: rgba(16, 185, 129, 0.15);
+  --metric-hover-border: rgba(59, 130, 246, 0.25);
+  --metric-hover-shadow: 0 18px 36px -10px rgba(59, 130, 246, 0.08);
+
+  /* ─── Borders ─────────────────────────────────────────────── */
+  --border-subtle:  rgba(15, 23, 42, 0.03);
+  --border-default: rgba(15, 23, 42, 0.06);
+  --border-strong:  rgba(15, 23, 42, 0.12);
+  --border-accent:  rgba(59, 130, 246, 0.4);
+
+  /* ─── Text ────────────────────────────────────────────────── */
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary:  #64748b;
+  --text-muted:     #64748b;
+  --text-disabled:  #94a3b8;
+  --text-inverse:   #ffffff;
+  --text-accent:    #3b82f6;   /* Premium blue accent text */
+  --text-success:   #10b981;
+  --text-warning:   #f59e0b;
+  --text-danger:    #ef4444;
+
+  /* ─── Interactive States ──────────────────────────────────── */
+  --hover-overlay:   rgba(0, 0, 0, 0.03);
+  --active-overlay:  rgba(0, 0, 0, 0.06);
+  --focus-ring:      rgba(59, 130, 246, 0.3);
+
+  /* ─── Sidebar ─────────────────────────────────────────────── */
+  --sidebar-bg:          rgba(255, 255, 255, 0.55);
+  --sidebar-border:      rgba(255, 255, 255, 0.65);
+  --sidebar-item-hover:  rgba(15, 23, 42, 0.035);
+  --sidebar-item-active: rgba(59, 130, 246, 0.08);
+  --sidebar-item-active-text: #3b82f6;
+
+  /* ─── TopBar ──────────────────────────────────────────────── */
+  --topbar-bg:     rgba(255, 255, 255, 0.45);
+  --topbar-border: rgba(255, 255, 255, 0.6);
+
+  /* ─── Table ───────────────────────────────────────────────── */
+  --table-header-bg:    rgba(15, 23, 42, 0.02);
+  --table-row-hover:    rgba(15, 23, 42, 0.025);
+  --table-row-selected: rgba(59, 130, 246, 0.05);
+  --table-border:       rgba(15, 23, 42, 0.04);
+
+  /* ─── Input (Premium Glassmorphic Inputs) ─────────────────── */
+  --input-bg:           rgba(255, 255, 255, 0.35);
+  --input-border:       rgba(15, 23, 42, 0.08);
+  --input-border-hover: rgba(15, 23, 42, 0.16);
+  --input-border-focus: #3b82f6;
+  --input-placeholder:  #94a3b8;
+
+  /* ─── Button ──────────────────────────────────────────────── */
+  --btn-primary-bg:        linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --btn-primary-hover:     linear-gradient(135deg, #2563eb, #7c3aed);
+  --btn-primary-text:      #ffffff;
+  --btn-secondary-bg:      rgba(255, 255, 255, 0.5);
+  --btn-secondary-hover:   rgba(255, 255, 255, 0.85);
+  --btn-secondary-border:  rgba(15, 23, 42, 0.08);
+  --btn-secondary-text:    #0f172a;
+  --btn-ghost-hover:       rgba(15, 23, 42, 0.04);
+  --btn-danger-bg:         #ef4444;
+  --btn-danger-hover:      #dc2626;
+  --btn-danger-text:       #ffffff;
+
+  /* ─── Pulse Gradient Helpers (Light Mode) ─────────────────── */
+  --color-accent-gradient-start: #3b82f6;
+  --color-accent-gradient-end:   #8b5cf6;
+  --color-accent-shadow:         rgba(59, 130, 246, 0.2);
+  --card-hover-shadow-color:     rgba(59, 130, 246, 0.05);
+
+  /* ─── Badge ───────────────────────────────────────────────── */
+  --badge-active-bg:     rgba(16, 185, 129, 0.08);
+  --badge-active-text:   #10b981;
+  --badge-active-border: rgba(16, 185, 129, 0.2);
+
+  --badge-pending-bg:     rgba(245, 158, 11, 0.08);
+  --badge-pending-text:   #f59e0b;
+  --badge-pending-border: rgba(245, 158, 11, 0.2);
+
+  --badge-danger-bg:     rgba(239, 68, 68, 0.08);
+  --badge-danger-text:   #ef4444;
+  --badge-danger-border: rgba(239, 68, 68, 0.2);
+
+  --badge-neutral-bg:     rgba(148, 163, 184, 0.12);
+  --badge-neutral-text:   #64748b;
+  --badge-neutral-border: rgba(148, 163, 184, 0.25);
+
+  --badge-accent-bg:     rgba(59, 130, 246, 0.08);
+  --badge-accent-text:   #3b82f6;
+  --badge-accent-border: rgba(59, 130, 246, 0.2);
+
+  /* ─── Scrollbar ───────────────────────────────────────────── */
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
+
+  /* ─── Skeleton ────────────────────────────────────────────── */
+  --skeleton-base:      rgba(15, 23, 42, 0.03);
+  --skeleton-highlight: rgba(15, 23, 42, 0.06);
+
+  /* ─── Panel / Overlay ─────────────────────────────────────── */
+  --overlay-bg:  rgba(15, 23, 42, 0.35);
+  --panel-bg:    rgba(255, 255, 255, 0.85);
+  --panel-border:rgba(255, 255, 255, 0.7);
+
+  /* ─── Toast ───────────────────────────────────────────────── */
+  --toast-bg:     rgba(255, 255, 255, 0.9);
+  --toast-border: rgba(255, 255, 255, 0.8);
+
+  /* ─── Chart colors ────────────────────────────────────────── */
+  --chart-grid:    rgba(15, 23, 42, 0.04);
+  --chart-text:    #94a3b8;
+  --chart-up:      #10b981;
+  --chart-down:    #ef4444;
+  --chart-neutral: #94a3b8;
+
+  --shadow-xs:  0 1px 2px 0 rgba(0,0,0,0.02);
+  --shadow-sm:  0 1px 3px 0 rgba(0,0,0,0.03);
+  --shadow-md:  0 4px 6px -1px rgba(0,0,0,0.04);
+  --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.05);
+  --shadow-panel: -8px 0 32px -4px rgba(0,0,0,0.08);
+}

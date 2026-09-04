@@ -1,0 +1,564 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model SuperAdmin {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String
+  isActive     Boolean    @default(true)
+  mfaSecret    String?
+  mfaEnabled   Boolean    @default(false)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+
+  @@map("super_admins")
+}
+
+model Broker {
+  id                     String                   @id @default(uuid())
+  companyName            String
+  contactName            String
+  email                  String                   @unique
+  passwordHash           String
+  phone                  String
+  country                String
+  regulatoryLicense      String?
+  kycDocuments           Json                     @default("[]")
+  status                 BrokerStatus             @default(PENDING)
+  agreementAccepted      Boolean                  @default(false)
+  agreementAcceptedAt    DateTime?
+  apiEnabled             Boolean                  @default(false)
+  mfaSecret              String?
+  mfaEnabled             Boolean                  @default(false)
+  adminNote              String?
+  executionAccountId     String?                  @unique
+  lastLoginAt            DateTime?
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  approvedAt             DateTime?
+  suspendedAt            DateTime?
+  businessTaxId          String?
+  entityType             String?
+  demoExecutionAccountId String?                  @unique
+  tradingMode            String                   @default("DEMO")
+  executionAccount       ExecutionAccount?        @relation("LiveAccount", fields: [executionAccountId], references: [id])
+  demoExecutionAccount   ExecutionAccount?        @relation("DemoAccount", fields: [demoExecutionAccountId], references: [id])
+  wallet                 Wallet?
+  clients                TradingClient[]
+  apiCredentials         BrokerApiCredential[]
+  pricingProfiles        PricingProfile[]
+  orders                 Order[]
+  positions              Position[]
+  auditLogs              AuditLog[]
+  spreadConfig           BrokerSpreadConfig?
+  supportTickets         SupportTicket[]
+  commissionLedger       BrokerCommissionLedger[]
+
+  @@index([status])
+  @@index([email])
+  @@map("brokers")
+}
+
+model BrokerApiCredential {
+  id             String    @id @default(uuid())
+  brokerId       String
+  apiKey         String    @unique
+  apiSecret      String
+  permissions    String[]  @default(["trade", "read"])
+  ipWhitelist    String[]  @default([])
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  expiresAt      DateTime?
+  lastUsedAt     DateTime?
+  /// FK to TradingClient — the house account used for algo trades
+  algoClientId   String?
+  /// "broker" | "algo"
+  credentialType String    @default("broker")
+  /// Human-readable label (e.g. "CRM Key", "Algo Connect")
+  label          String?
+  broker         Broker    @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+
+  @@index([brokerId])
+  @@index([apiKey])
+  @@index([credentialType])
+  @@map("broker_api_credentials")
+}
+
+model Wallet {
+  id                 String              @id @default(uuid())
+  brokerId           String              @unique
+  balanceUSDT        Decimal             @default(0) @db.Decimal(36, 8)
+  balanceBTC         Decimal             @default(0) @db.Decimal(36, 8)
+  balanceETH         Decimal             @default(0) @db.Decimal(36, 8)
+  balanceUSDC        Decimal             @default(0) @db.Decimal(36, 8)
+  totalCreditUSD     Decimal             @default(0) @db.Decimal(36, 2)
+  usedCreditUSD      Decimal             @default(0) @db.Decimal(36, 2)
+  availableCreditUSD Decimal             @default(0) @db.Decimal(36, 2)
+  isActive           Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  broker             Broker              @relation(fields: [brokerId], references: [id], onDelete: Restrict)
+  transactions       WalletTransaction[]
+  creditLogs         CreditLog[]
+
+  @@map("wallets")
+}
+
+model WalletTransaction {
+  id          String            @id @default(uuid())
+  walletId    String
+  type        TransactionType
+  currency    Currency
+  amount      Decimal           @db.Decimal(36, 8)
+  amountUSD   Decimal           @db.Decimal(36, 2)
+  txHash      String?
+  networkFee  Decimal?          @db.Decimal(36, 8)
+  status      TransactionStatus @default(PENDING)
+  adminNote   String?
+  processedBy String?
+  createdAt   DateTime          @default(now())
+  processedAt DateTime?
+  wallet      Wallet            @relation(fields: [walletId], references: [id], onDelete: Restrict)
+
+  @@index([walletId, status, createdAt])
+  @@index([status])
+  @@map("wallet_transactions")
+}
+
+model CreditLog {
+  id              String       @id @default(uuid())
+  walletId        String
+  action          CreditAction
+  amount          Decimal      @db.Decimal(36, 2)
+  reason          String
+  previousBalance Decimal      @db.Decimal(36, 2)
+  newBalance      Decimal      @db.Decimal(36, 2)
+  triggeredBy     String
+  createdAt       DateTime     @default(now())
+  wallet          Wallet       @relation(fields: [walletId], references: [id], onDelete: Restrict)
+
+  @@index([walletId, createdAt])
+  @@map("credit_logs")
+}
+
+model TradingSymbol {
+  id                     String                  @id @default(uuid())
+  name                   String                  @unique
+  displayName            String
+  category               SymbolCategory
+  baseCurrency           String
+  quoteCurrency          String
+  digits                 Int                     @default(5)
+  contractSize           Decimal                 @db.Decimal(18, 2)
+  minVolume              Decimal                 @db.Decimal(18, 2)
+  maxVolume              Decimal                 @db.Decimal(18, 2)
+  stepVolume             Decimal                 @db.Decimal(18, 2)
+  rawSpread              Decimal                 @db.Decimal(18, 5)
+  rawCommission          Decimal                 @db.Decimal(18, 5)
+  rawSwapLong            Decimal                 @db.Decimal(18, 5)
+  rawSwapShort           Decimal                 @db.Decimal(18, 5)
+  tradingSessionStart    String
+  tradingSessionEnd      String
+  isActive               Boolean                 @default(true)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  orders                 Order[]
+  positions              Position[]
+  profileSymbolOverrides ProfileSymbolOverride[]
+
+  @@index([category, isActive])
+  @@map("trading_symbols")
+}
+
+model PricingProfile {
+  id               String                  @id @default(uuid())
+  brokerId         String
+  name             String
+  spreadMarkup     Decimal                 @db.Decimal(18, 5)
+  commissionMarkup Decimal                 @db.Decimal(18, 5)
+  swapMarkupLong   Decimal                 @db.Decimal(18, 5)
+  swapMarkupShort  Decimal                 @db.Decimal(18, 5)
+  isDefault        Boolean                 @default(false)
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  broker           Broker                  @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  symbolOverrides  ProfileSymbolOverride[]
+
+  @@unique([brokerId, name])
+  @@index([brokerId, isDefault])
+  @@map("pricing_profiles")
+}
+
+model ProfileSymbolOverride {
+  id                 String         @id @default(uuid())
+  profileId          String
+  symbolId           String
+  spreadMarkup       Decimal?       @db.Decimal(18, 5)
+  commissionOverride Decimal?       @db.Decimal(18, 5)
+  swapOverrideLong   Decimal?       @db.Decimal(18, 5)
+  swapOverrideShort  Decimal?       @db.Decimal(18, 5)
+  createdAt          DateTime       @default(now())
+  profile            PricingProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  symbol             TradingSymbol  @relation(fields: [symbolId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, symbolId])
+  @@map("profile_symbol_overrides")
+}
+
+model BrokerSpreadConfig {
+  id                   String                 @id @default(uuid())
+  brokerId             String                 @unique
+  /// Global LP markup in pips applied to ALL symbols that lack a per-symbol override.
+  /// halfMarkup is applied symmetrically: bid -= halfMarkup, ask += halfMarkup
+  globalMarkupPips     Decimal                @default(0) @db.Decimal(18, 5)
+  /// MetaAPI account ID used as the price source for this broker.
+  /// If null, the global Binance/Deriv feed is used as the raw source.
+  priceSourceAccountId String?
+  /// LP commission charged per 1 standard lot (100,000 units), in USD.
+  /// Proportional: 0.5 lots → 0.5 × commissionPerLot
+  commissionPerLot     Decimal                @default(0) @db.Decimal(18, 5)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  marginCallPercent    Decimal                @default(100.0) @db.Decimal(18, 5)
+  stopoutPercent       Decimal                @default(50.0) @db.Decimal(18, 5)
+  freeLotsThreshold    Decimal                @default(0) @db.Decimal(18, 2)
+  broker               Broker                 @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  symbolOverrides      BrokerSpreadOverride[]
+
+  @@index([brokerId])
+  @@map("broker_spread_configs")
+}
+
+model BrokerSpreadOverride {
+  id         String             @id @default(uuid())
+  configId   String
+  /// Platform symbol name, e.g. "EURUSD", "XAUUSD", "BTCUSD"
+  symbolName String
+  /// Override LP markup in pips for this specific symbol (overrides globalMarkupPips). Null means use globalFallback.
+  markupPips Decimal?           @db.Decimal(18, 5)
+  createdAt  DateTime           @default(now())
+  /// Synced raw spread from MT5 connected account in pips
+  rawSpread  Decimal            @default(0) @db.Decimal(18, 5)
+  config     BrokerSpreadConfig @relation(fields: [configId], references: [id], onDelete: Cascade)
+
+  @@unique([configId, symbolName])
+  @@index([configId])
+  @@map("broker_spread_overrides")
+}
+
+model ExecutionAccount {
+  id            String     @id @default(uuid())
+  accountName   String
+  provider      String
+  accountNumber String
+  serverAddress String
+  credentials   Json
+  status        String     @default("active")
+  maxExposure   Decimal    @db.Decimal(36, 2)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  broker        Broker?    @relation("LiveAccount")
+  demoBroker    Broker?    @relation("DemoAccount")
+  orders        Order[]
+  positions     Position[]
+
+  @@map("execution_accounts")
+}
+
+model TradingClient {
+  id               String     @id @default(uuid())
+  brokerId         String
+  externalClientId String
+  firstName        String
+  lastName         String
+  email            String
+  accountType      String     @default("standard")
+  leverage         Int        @default(100)
+  currency         String     @default("USD")
+  isActive         Boolean    @default(true)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  broker           Broker     @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  orders           Order[]
+  positions        Position[]
+
+  @@unique([brokerId, externalClientId])
+  @@unique([brokerId, email])
+  @@index([brokerId, isActive])
+  @@map("trading_clients")
+}
+
+model Order {
+  id                      String           @id @default(uuid())
+  brokerId                String
+  clientId                String
+  executionAccountId      String
+  symbolId                String
+  side                    OrderSide
+  type                    OrderType
+  requestedVolume         Decimal          @db.Decimal(18, 2)
+  filledVolume            Decimal          @default(0) @db.Decimal(18, 2)
+  requestedPrice          Decimal?         @db.Decimal(18, 8)
+  executionPrice          Decimal?         @db.Decimal(18, 8)
+  slippage                Decimal?         @db.Decimal(18, 5)
+  stopLoss                Decimal?         @db.Decimal(18, 8)
+  takeProfit              Decimal?         @db.Decimal(18, 8)
+  status                  OrderStatus      @default(PENDING)
+  rejectionReason         String?
+  priceValidationPassed   Boolean?
+  pricingProfileId        String?
+  openedAt                DateTime?
+  closedAt                DateTime?
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  brokerRevenue           Decimal          @default(0) @db.Decimal(36, 8)
+  clientCommission        Decimal          @default(0) @db.Decimal(36, 8)
+  clientSpread            Decimal          @default(0) @db.Decimal(18, 5)
+  commissionMarkupApplied Decimal          @default(0) @db.Decimal(36, 8)
+  lpRawCommission         Decimal          @default(0) @db.Decimal(36, 8)
+  lpRawSpread             Decimal          @default(0) @db.Decimal(18, 5)
+  lpRevenue               Decimal          @default(0) @db.Decimal(36, 8)
+  spreadMarkupApplied     Decimal          @default(0) @db.Decimal(18, 5)
+  spreadMarkupRevenue     Decimal          @default(0) @db.Decimal(36, 8)
+  externalId              String?
+  mode                    String           @default("DEMO")
+  broker                  Broker           @relation(fields: [brokerId], references: [id], onDelete: Restrict)
+  client                  TradingClient    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  executionAccount        ExecutionAccount @relation(fields: [executionAccountId], references: [id])
+  symbol                  TradingSymbol    @relation(fields: [symbolId], references: [id])
+  position                Position?
+
+  @@index([brokerId, createdAt])
+  @@index([clientId, status])
+  @@index([symbolId, createdAt])
+  @@index([status])
+  @@map("orders")
+}
+
+model Position {
+  id                 String           @id @default(uuid())
+  brokerId           String
+  clientId           String
+  symbolId           String
+  executionAccountId String
+  orderId            String?          @unique
+  side               OrderSide
+  volume             Decimal          @db.Decimal(18, 2)
+  openPrice          Decimal          @db.Decimal(18, 8)
+  currentPrice       Decimal          @db.Decimal(18, 8)
+  floatingPnl        Decimal          @default(0) @db.Decimal(36, 2)
+  closedPnl          Decimal          @default(0) @db.Decimal(36, 2)
+  swap               Decimal          @default(0) @db.Decimal(36, 2)
+  commission         Decimal          @default(0) @db.Decimal(36, 2)
+  status             PositionStatus   @default(OPEN)
+  openedAt           DateTime         @default(now())
+  closedAt           DateTime?
+  updatedAt          DateTime         @updatedAt
+  leverageAtOpen     Int?
+  marginReservedUSD  Decimal?         @db.Decimal(36, 8)
+  externalId         String?
+  mode               String           @default("DEMO")
+  broker             Broker           @relation(fields: [brokerId], references: [id], onDelete: Restrict)
+  client             TradingClient    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  symbol             TradingSymbol    @relation(fields: [symbolId], references: [id])
+  executionAccount   ExecutionAccount @relation(fields: [executionAccountId], references: [id])
+  order              Order?           @relation(fields: [orderId], references: [id])
+
+  @@index([brokerId, status])
+  @@index([clientId, status])
+  @@index([symbolId, status])
+  @@map("positions")
+}
+
+model AuditLog {
+  id              String      @id @default(uuid())
+  entityType      String
+  entityId        String
+  action          String
+  performedBy     String
+  performedByRole String
+  previousData    Json?
+  newData         Json?
+  ipAddress       String
+  userAgent       String?
+  createdAt       DateTime    @default(now())
+  superAdmin      SuperAdmin? @relation(fields: [performedBy], references: [id], map: "audit_logs_super_admin_fkey")
+  broker          Broker?     @relation(fields: [performedBy], references: [id], map: "audit_logs_broker_fkey")
+
+  @@index([entityType, entityId])
+  @@index([performedBy, createdAt])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model SystemSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  category  String
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@map("system_settings")
+}
+
+model SupportTicket {
+  id                   String           @id @default(uuid())
+  ticketNumber         String           @unique
+  brokerId             String
+  subject              String
+  category             String
+  priority             TicketPriority   @default(MEDIUM)
+  status               TicketStatus     @default(OPEN)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  lastMessageAt        DateTime         @default(now())
+  resolvedAt           DateTime?
+  hasUnreadAdminReply  Boolean          @default(false)
+  hasUnreadBrokerReply Boolean          @default(false)
+  broker               Broker           @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  messages             SupportMessage[]
+
+  @@index([brokerId])
+  @@index([status])
+  @@index([priority])
+  @@map("support_tickets")
+}
+
+model SupportMessage {
+  id          String            @id @default(uuid())
+  ticketId    String
+  senderType  MessageSenderType
+  senderId    String
+  senderName  String
+  content     String
+  attachments Json?
+  createdAt   DateTime          @default(now())
+  ticket      SupportTicket     @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId])
+  @@map("support_messages")
+}
+
+model BrokerCommissionLedger {
+  id                String   @id @default(uuid())
+  brokerId          String
+  billingMonth      String
+  totalLotsTraded   Decimal  @default(0) @db.Decimal(18, 2)
+  freeLotsUsed      Decimal  @default(0) @db.Decimal(18, 2)
+  chargeableLots    Decimal  @default(0) @db.Decimal(18, 2)
+  totalCommission   Decimal  @default(0) @db.Decimal(36, 8)
+  thresholdSnapshot Decimal  @default(0) @db.Decimal(18, 2)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  broker            Broker   @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+
+  @@unique([brokerId, billingMonth])
+  @@index([brokerId, billingMonth])
+  @@map("broker_commission_ledger")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  BROKER
+}
+
+enum BrokerStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+  REJECTED
+}
+
+enum OrderSide {
+  BUY
+  SELL
+}
+
+enum OrderType {
+  MARKET
+  LIMIT
+  STOP
+}
+
+enum OrderStatus {
+  PENDING
+  FILLED
+  PARTIALLY_FILLED
+  REJECTED
+  CANCELLED
+}
+
+enum PositionStatus {
+  OPEN
+  CLOSED
+  PARTIALLY_CLOSED
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum TransactionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum CreditAction {
+  ALLOCATE
+  DEDUCT
+  RELEASE
+  ADJUST
+}
+
+enum SymbolCategory {
+  FOREX
+  CFD
+  CRYPTO
+  COMMODITY
+  INDEX
+}
+
+enum ExecutionPolicy {
+  REJECT
+  FILL_AT_LP_PRICE
+}
+
+enum Currency {
+  USDT
+  BTC
+  ETH
+  USDC
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum MessageSenderType {
+  BROKER
+  ADMIN
+}

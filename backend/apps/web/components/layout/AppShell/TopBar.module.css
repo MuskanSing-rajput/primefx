@@ -1,0 +1,169 @@
+.topbar {
+  height: var(--topbar-height);
+  background: var(--topbar-bg, rgba(6, 8, 16, 0.95));
+  border-bottom: 1px solid var(--topbar-border, rgba(255, 255, 255, 0.06));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background 300ms ease, border-color 300ms ease;
+}
+
+/* ─── Menu button ─────────────────────────────────────────────── */
+.menuBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #64748b);
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: none;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  flex-shrink: 0;
+}
+
+.menuBtn:hover {
+  background: var(--item-hover, rgba(255, 255, 255, 0.05));
+  color: var(--text-primary, #f1f5f9);
+  border-color: var(--border-default, rgba(255, 255, 255, 0.08));
+}
+
+/* ─── Breadcrumb ─────────────────────────────────────────────── */
+.breadcrumb { overflow: hidden; }
+
+.breadcrumbList {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.breadcrumbItem { display: flex; align-items: center; gap: 6px; }
+
+.breadcrumbSep {
+  color: var(--text-tertiary, #334155);
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.breadcrumbLink {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary, #475569);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 150ms ease;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.breadcrumbLink:hover { color: var(--text-accent, #2dd4bf); }
+
+.breadcrumbCurrent {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-accent, #2dd4bf);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── Spacer ─────────────────────────────────────────────────── */
+.spacer { flex: 1; }
+
+/* ─── Actions ────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary, #64748b);
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: none;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.iconBtn:hover {
+  background: var(--item-hover, rgba(255, 255, 255, 0.05));
+  color: var(--text-primary, #f1f5f9);
+  border-color: var(--border-default, rgba(255, 255, 255, 0.08));
+}
+
+/* ─── WS Connection Status Badge ─────────────────────────────── */
+.wsStatus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  transition: background 200ms ease, border-color 200ms ease;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.wsDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.wsLabel { display: none; }
+@media (min-width: 1024px) { .wsLabel { display: block; } }
+
+/* Status variants */
+.connected {
+  background: rgba(34, 197, 94, 0.08);
+  color: #22c55e;
+  border-color: rgba(34, 197, 94, 0.2);
+}
+.connected .wsDot {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.connecting {
+  background: rgba(245, 158, 11, 0.08);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+.connecting .wsDot { background: #f59e0b; }
+
+.disconnected, .error {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+.disconnected .wsDot,
+.error .wsDot { background: #ef4444; }
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

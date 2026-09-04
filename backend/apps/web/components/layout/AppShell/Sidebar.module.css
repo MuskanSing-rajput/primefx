@@ -1,0 +1,432 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   ADMIN SIDEBAR — Full Cyberpunk Dark Theme
+   Matches Broker Dashboard design exactly
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Shell wrapper ──────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-full);
+  height: 100%;
+  min-height: 100dvh;
+  background: var(--sidebar-bg, #060810);
+  border-right: 1px solid var(--sidebar-border, rgba(255, 255, 255, 0.06));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: width var(--transition-panel), background 300ms ease, border-color 300ms ease;
+  will-change: width;
+  position: relative;
+}
+
+/* Grid overlay texture */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(45, 212, 191, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45, 212, 191, 0.012) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+}
+
+.collapsed {
+  width: var(--sidebar-collapsed);
+}
+
+.collapsed .brand {
+  padding: 6px 0;
+  justify-content: center;
+}
+
+.brandLogoImg {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: height 200ms ease;
+}
+
+.collapsed .brandLogoImg {
+  height: 38px;
+}
+
+/* ─── Brand / Logo ───────────────────────────────────────────────────── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 16px;
+  height: var(--topbar-height);
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.brandIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.brandName {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary, #f1f5f9);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.brandRole {
+  font-size: 9.5px;
+  color: #2dd4bf;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border-subtle, rgba(255, 255, 255, 0.06));
+  flex-shrink: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Navigation ─────────────────────────────────────────────────────── */
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 0;
+  position: relative;
+  z-index: 1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav::-webkit-scrollbar-thumb {
+  background: var(--border-default, rgba(255, 255, 255, 0.08));
+  border-radius: 4px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 8px;
+}
+
+/* ─── Section header labels ──────────────────────────────────────────── */
+.navSection {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-tertiary, #334155);
+  padding: 14px 8px 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── Nav Item ───────────────────────────────────────────────────────── */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: none;
+  font-family: 'Inter', -apple-system, sans-serif;
+  width: 100%;
+  text-align: left;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  white-space: nowrap;
+  position: relative;
+  min-height: 38px;
+}
+
+.navItem:hover {
+  background: var(--sidebar-item-hover, rgba(255, 255, 255, 0.04));
+  color: var(--text-primary, #cbd5e1);
+  border-color: var(--border-default, rgba(255, 255, 255, 0.05));
+}
+
+/* ─── Active nav item ─────────────────────────────────────────────────── */
+.activeItem {
+  background: rgba(45, 212, 191, 0.08);
+  color: #2dd4bf;
+  font-weight: 600;
+  border-color: rgba(45, 212, 191, 0.18);
+}
+
+.activeItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: #2dd4bf;
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.7);
+}
+
+.activeItem:hover {
+  background: rgba(45, 212, 191, 0.1);
+  color: #2dd4bf;
+}
+
+/* ─── Nav Icon ───────────────────────────────────────────────────────── */
+.navIcon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 150ms ease, color 150ms ease;
+}
+
+.activeItem .navIcon {
+  opacity: 1;
+  color: var(--text-accent);
+}
+
+/* ─── Nav Label ──────────────────────────────────────────────────────── */
+.navLabel {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Nav Badge ──────────────────────────────────────────────────────── */
+.navBadge {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.navBadgeDot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 9999px;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.8);
+}
+
+/* ─── Chevron ────────────────────────────────────────────────────────── */
+.chevron {
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: transform 200ms ease;
+  line-height: 1;
+}
+
+.chevronOpen {
+  transform: rotate(90deg);
+}
+
+/* ─── Sublist ────────────────────────────────────────────────────────── */
+.subList {
+  margin-left: calc(10px + 18px + 10px);
+  margin-top: 2px;
+  margin-bottom: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.subItem {
+  display: block;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 150ms ease, color 150ms ease;
+  white-space: nowrap;
+}
+
+.subItem:hover {
+  background: var(--sidebar-item-hover);
+  color: var(--text-primary);
+}
+
+.activeSubItem {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+/* ─── Spacer ─────────────────────────────────────────────────────────── */
+.spacer {
+  flex: 1;
+}
+
+/* ─── Footer / User section ─────────────────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 1;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.userAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(45, 212, 191, 0.12);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.15);
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userRole {
+  font-size: 9.5px;
+  color: var(--text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.logoutIconBtn {
+  margin-left: auto;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.logoutIconBtn:hover {
+  opacity: 1;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* ─── Collapse button ────────────────────────────────────────────────── */
+.collapseBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.collapseBtn:hover {
+  background: var(--sidebar-item-hover);
+  color: var(--text-tertiary);
+  border-color: var(--border-strong);
+}
+
+.collapseIcon {
+  font-size: 15px;
+  line-height: 1;
+  display: block;
+  transition: transform 200ms ease;
+}
+
+.collapseIconFlipped {
+  transform: rotate(180deg);
+}
+
+/* ─── Collapsed mode ─────────────────────────────────────────────────── */
+.collapsed .navList { padding: 0 6px; }
+.collapsed .navItem { justify-content: center; padding: 9px; }
+.collapsed .footer { justify-content: center; padding: 12px 8px; }
+.collapsed .collapseBtn { margin: 0; }

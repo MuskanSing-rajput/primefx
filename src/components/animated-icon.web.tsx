@@ -58,7 +58,7 @@ export function AnimatedIcon() {
   return (
     <View style={styles.iconContainer}>
       <Animated.View entering={glowKeyframe.duration(60 * 1000 * 4)} style={styles.glow}>
-        <Image style={styles.glow} source={require('@/assets/images/logo-glow.png')} />
+        <Image style={styles.glow} source={require('@/assets/images/logo_prime.png')} contentFit="contain" />
       </Animated.View>
 
       <Animated.View style={styles.background} entering={keyframe.duration(DURATION)}>
@@ -66,7 +66,7 @@ export function AnimatedIcon() {
       </Animated.View>
 
       <Animated.View style={styles.imageContainer} entering={logoKeyframe.duration(DURATION)}>
-        <Image style={styles.image} source={require('@/assets/images/expo-logo.png')} />
+        <Image style={styles.image} source={require('@/assets/images/logo_prime.png')} contentFit="contain" />
       </Animated.View>
     </View>
   );
@@ -85,24 +85,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   glow: {
-    width: 201,
-    height: 201,
+    width: 140,
+    height: 140,
     position: 'absolute',
   },
   iconContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 128,
-    height: 128,
+    width: 96,
+    height: 96,
   },
   image: {
     position: 'absolute',
-    width: 76,
-    height: 71,
+    width: 54,
+    height: 54,
   },
   background: {
-    width: 128,
-    height: 128,
+    width: 96,
+    height: 96,
     position: 'absolute',
   },
 });

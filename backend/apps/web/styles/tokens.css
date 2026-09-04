@@ -1,0 +1,118 @@
+/* ============================================================
+   LP Platform — Design Tokens
+   "Precision" Design Language
+   Minimal · Boxy · Dense · Professional
+   ============================================================ */
+
+:root {
+  /* ─── Spacing Scale (4px base) ─────────────────────────────── */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ─── Border Radius (intentionally minimal — boxy design) ─── */
+  --radius-0: 0px;
+  --radius-1: 2px;
+  --radius-2: 4px;    /* Default — nearly flat */
+  --radius-3: 6px;    /* Max for cards */
+  --radius-full: 9999px; /* Only for status dots / avatars */
+
+  /* ─── Typography Scale ──────────────────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 14px;
+  --text-md:   15px;
+  --text-lg:   16px;
+  --text-xl:   18px;
+  --text-2xl:  20px;
+  --text-3xl:  24px;
+  --text-4xl:  28px;
+  --text-5xl:  36px;
+
+  --leading-tight: 1.25;
+  --leading-snug:  1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  --font-normal:   400;
+  --font-medium:   500;
+  --font-semibold: 600;
+  --font-bold:     700;
+
+  /* ─── Z-Index Layers ────────────────────────────────────────── */
+  --z-behind:  -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-panel:    500;
+  --z-toast:    600;
+  --z-tooltip:  700;
+
+  /* ─── Transitions ───────────────────────────────────────────── */
+  --transition-fast:   100ms ease;
+  --transition-base:   150ms ease;
+  --transition-slow:   250ms ease;
+  --transition-panel:  280ms cubic-bezier(0.32, 0.72, 0, 1);
+  --transition-drawer: 300ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ─── Layout Dimensions ─────────────────────────────────────── */
+  --sidebar-full:      260px;
+  --sidebar-collapsed: 64px;
+  --topbar-height:     56px;
+  --panel-sm:          440px;
+  --panel-md:          540px;
+  --panel-lg:          680px;
+  --panel-xl:          800px;
+
+  /* ─── Shadows ───────────────────────────────────────────────── */
+  /* Shadows use current theme foreground color for natural blending */
+  --shadow-xs:  0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm:  0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-md:  0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+  --shadow-lg:  0 10px 15px -3px rgb(0 0 0 / 0.12), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl:  0 20px 25px -5px rgb(0 0 0 / 0.14), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-panel: -8px 0 32px -4px rgb(0 0 0 / 0.18);
+
+  /* ─── Accent Colors (shared across themes) ───────────────────── */
+  --color-accent:        #2563EB;
+  --color-accent-hover:  #1D4ED8;
+  --color-accent-light:  #EFF6FF;
+  --color-accent-muted:  rgba(37, 99, 235, 0.12);
+
+  --color-success:       #10B981;
+  --color-success-light: #ECFDF5;
+  --color-success-muted: rgba(16, 185, 129, 0.12);
+
+  --color-warning:       #F59E0B;
+  --color-warning-light: #FFFBEB;
+  --color-warning-muted: rgba(245, 158, 11, 0.12);
+
+  --color-danger:        #EF4444;
+  --color-danger-hover:  #DC2626;
+  --color-danger-light:  #FEF2F2;
+  --color-danger-muted:  rgba(239, 68, 68, 0.12);
+
+  --color-purple:        #7C3AED;
+  --color-purple-light:  #F5F3FF;
+  --color-purple-muted:  rgba(124, 58, 237, 0.12);
+
+  --color-orange:        #EA580C;
+  --color-orange-light:  #FFF7ED;
+  --color-orange-muted:  rgba(234, 88, 12, 0.12);
+}
